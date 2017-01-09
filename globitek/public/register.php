@@ -45,7 +45,25 @@
     // Hint: private/functions.php can help
   ?>
 
-  <!-- TODO: HTML form goes here -->
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+    <p>
+      First Name:<br>
+      <input type="text" name="first_name">
+    </p>
+    <p>
+      Last Name:<br>
+      <input type="text" name="last_name">
+    </p>
+    <p>
+      Userame:<br>
+      <input type="text" name="username">
+    </p>
+    <p>
+      Email:<br>
+      <input type="email" name="email">
+    </p>
+    <p><input type="submit" name="submit"></p>
+  </form>
 
 </div>
 
