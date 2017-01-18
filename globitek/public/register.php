@@ -5,14 +5,50 @@
 
   // if this is a POST request, process the form
   // Hint: private/functions.php can help
+  if (is_post_request()) {
+    $firstName = $lastName = $username = $email = "";
 
-    // Confirm that POST values are present before accessing them.
+    $errors = [];
+    $fields = [];
+    if (is_blank($_POST['first_name'])) {
+      $errors[] = "First name cannot be blank.";
+    } elseif (!has_length($_POST['first_name'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "First name must be between 2 and 255 characters.";
+    } else {
+      $firstName = $_POST['first_name'];
+    }
+    $fields[] = $firstName;
 
-    // Perform Validations
-    // Hint: Write these in private/validation_functions.php
+    if (is_blank($_POST['last_name'])) {
+      $errors[] = "Last name cannot be blank.";
+    } elseif (!has_length($_POST['last_name'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "Last name must be between 2 and 255 characters.";
+    } else {
+      $lastName = $_POST['last_name'];
+    }
+    $fields[] = $lastName;
+
+    if (is_blank($_POST['username'])) {
+      $errors[] = "Username cannot be blank.";
+    } elseif (!has_length($_POST['username'], ['min' => 8, 'max' => 255])) {
+      $errors[] = "Username must be between 8 and 255 characters.";
+    } else {
+      $username = $_POST['username'];
+    }
+    $fields[] = $username;
+
+    if (is_blank($_POST['email'])) {
+      $errors[] = "Email cannot be blank.";
+    } elseif (!has_valid_email_format($_POST['email'])) {
+      $errors[] = "Email must have a valid format";
+    } else {
+      $email = $_POST['email'];
+    }
+    $fields[] = $email;
 
     // if there were no errors, submit data to database
-
+    if (all_fields_valid($fields)) {
+      echo "<script>alert(\"Submitting data to database\");</script>";
       // Write SQL INSERT statement
       // $sql = "";
 
@@ -30,6 +66,8 @@
       //   db_close($db);
       //   exit;
       // }
+    }      
+  }
 
 ?>
 
@@ -41,26 +79,25 @@
   <p>Register to become a Globitek Partner.</p>
 
   <?php
-    // TODO: display any form errors here
-    // Hint: private/functions.php can help
+    echo display_errors($errors);
   ?>
 
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+  <form action="<?php echo h($_SERVER["PHP_SELF"]);?>" method="POST">
     <p>
       First Name:<br>
-      <input type="text" name="first_name">
+      <input type="text" name="first_name" value="<?php echo $_POST['first_name']; ?>">
     </p>
     <p>
       Last Name:<br>
-      <input type="text" name="last_name">
+      <input type="text" name="last_name" value="<?php echo $_POST['last_name']; ?>">
     </p>
     <p>
       Userame:<br>
-      <input type="text" name="username">
+      <input type="text" name="username" value="<?php echo $_POST['username']; ?>">
     </p>
     <p>
       Email:<br>
-      <input type="email" name="email">
+      <input type="text" name="email" value="<?php echo $_POST['email']; ?>">
     </p>
     <p><input type="submit" name="submit"></p>
   </form>
