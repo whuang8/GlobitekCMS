@@ -15,7 +15,7 @@
     } elseif (!has_length($_POST['first_name'], ['min' => 2, 'max' => 255])) {
       $errors[] = "First name must be between 2 and 255 characters.";
     } elseif(!has_valid_name_format($_POST['first_name'])) {
-      $errors[] = "First name must only contain letters, spaces, symbols: - , . \'";
+      $errors[] = "First name must only contain letters, spaces, symbols: - , . '";
     } else {
       $firstName = h($_POST['first_name']);
     }
@@ -26,7 +26,7 @@
     } elseif (!has_length($_POST['last_name'], ['min' => 2, 'max' => 255])) {
       $errors[] = "Last name must be between 2 and 255 characters.";
     } elseif(!has_valid_name_format($_POST['last_name'])) {
-      $errors[] = "Last name must only contain letters, spaces, symbols: - , . \'";
+      $errors[] = "Last name must only contain letters, spaces, symbols: - , . '";
     } else {
       $lastName = h($_POST['last_name']);
     }
