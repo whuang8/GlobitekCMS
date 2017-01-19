@@ -50,7 +50,7 @@ The following advanced user stories are optional:
 
 * [x]  Bonus 1: Validate that form values contain only whitelisted characters.
 
-* [ ]  Bonus 2: Validate the uniqueness of the username.
+* [x]  Bonus 2: Validate the uniqueness of the username.
 
 
 ## Video Walkthrough

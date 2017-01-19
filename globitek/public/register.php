@@ -68,9 +68,9 @@
       } else {
           //The SQL INSERT statement failed.
         $error = db_error($db);
-          echo "<script>alert(\"$error\");</script>";
-          db_close($db);
-          exit;
+        echo "<script>alert(\"$error\");</script>";
+        db_close($db);
+        exit;
       }
     }      
   }
