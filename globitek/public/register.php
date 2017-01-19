@@ -14,6 +14,8 @@
       $errors[] = "First name cannot be blank.";
     } elseif (!has_length($_POST['first_name'], ['min' => 2, 'max' => 255])) {
       $errors[] = "First name must be between 2 and 255 characters.";
+    } elseif(!has_valid_name_format($_POST['first_name'])) {
+      $errors[] = "First name must only contain letters, spaces, symbols: - , . \'";
     } else {
       $firstName = h($_POST['first_name']);
     }
@@ -23,6 +25,8 @@
       $errors[] = "Last name cannot be blank.";
     } elseif (!has_length($_POST['last_name'], ['min' => 2, 'max' => 255])) {
       $errors[] = "Last name must be between 2 and 255 characters.";
+    } elseif(!has_valid_name_format($_POST['last_name'])) {
+      $errors[] = "Last name must only contain letters, spaces, symbols: - , . \'";
     } else {
       $lastName = h($_POST['last_name']);
     }
@@ -32,6 +36,8 @@
       $errors[] = "Username cannot be blank.";
     } elseif (!has_length($_POST['username'], ['min' => 8, 'max' => 255])) {
       $errors[] = "Username must be between 8 and 255 characters.";
+    } elseif(!has_valid_username_format($_POST['username'])) {
+      $errors[] = "Username must only contain letters, numbers, and underscores";
     } else {
       $username = h($_POST['username']);
     }
@@ -40,7 +46,7 @@
     if (is_blank($_POST['email'])) {
       $errors[] = "Email cannot be blank.";
     } elseif (!has_valid_email_format($_POST['email'])) {
-      $errors[] = "Email must have a valid format";
+      $errors[] = "Email must have a valid format and only contain letters, numbers, and symbols: _ @ .";
     } else {
       $email = h($_POST['email']);
     }
