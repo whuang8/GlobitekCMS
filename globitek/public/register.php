@@ -15,7 +15,7 @@
     } elseif (!has_length($_POST['first_name'], ['min' => 2, 'max' => 255])) {
       $errors[] = "First name must be between 2 and 255 characters.";
     } else {
-      $firstName = $_POST['first_name'];
+      $firstName = h($_POST['first_name']);
     }
     $fields[] = $firstName;
 
@@ -24,7 +24,7 @@
     } elseif (!has_length($_POST['last_name'], ['min' => 2, 'max' => 255])) {
       $errors[] = "Last name must be between 2 and 255 characters.";
     } else {
-      $lastName = $_POST['last_name'];
+      $lastName = h($_POST['last_name']);
     }
     $fields[] = $lastName;
 
@@ -33,7 +33,7 @@
     } elseif (!has_length($_POST['username'], ['min' => 8, 'max' => 255])) {
       $errors[] = "Username must be between 8 and 255 characters.";
     } else {
-      $username = $_POST['username'];
+      $username = h($_POST['username']);
     }
     $fields[] = $username;
 
@@ -42,13 +42,12 @@
     } elseif (!has_valid_email_format($_POST['email'])) {
       $errors[] = "Email must have a valid format";
     } else {
-      $email = $_POST['email'];
+      $email = h($_POST['email']);
     }
     $fields[] = $email;
 
     // if there were no errors, submit data to database
     if (all_fields_valid($fields)) {
-      echo "<script>alert(\"Submitting data to database\");</script>";
       $date = date("Y-m-d H:i:s");
       // Write SQL INSERT statement
       $sql = "INSERT INTO users(first_name, last_name, username, email, created_at)
@@ -58,13 +57,12 @@
       $result = db_query($db, $sql);
       if($result) {
         db_close($db);
-        echo "<script>alert(\"Registration successful\");</script>";
-        //   TODO redirect user to success page
+        redirect_to("registration_success.php");
 
       } else {
           //The SQL INSERT statement failed.
-          // Just show the error, not the form
-          echo db_error($db);
+        $error = db_error($db);
+          echo "<script>alert(\"$error\");</script>";
           db_close($db);
           exit;
       }
@@ -87,19 +85,19 @@
   <form action="<?php echo h($_SERVER["PHP_SELF"]);?>" method="POST">
     <p>
       First Name:<br>
-      <input type="text" name="first_name" value="<?php echo $_POST['first_name']; ?>">
+      <input type="text" name="first_name" value="<?php echo h($_POST['first_name']); ?>">
     </p>
     <p>
       Last Name:<br>
-      <input type="text" name="last_name" value="<?php echo $_POST['last_name']; ?>">
+      <input type="text" name="last_name" value="<?php echo h($_POST['last_name']); ?>">
     </p>
     <p>
       Userame:<br>
-      <input type="text" name="username" value="<?php echo $_POST['username']; ?>">
+      <input type="text" name="username" value="<?php echo h($_POST['username']); ?>">
     </p>
     <p>
       Email:<br>
-      <input type="text" name="email" value="<?php echo $_POST['email']; ?>">
+      <input type="text" name="email" value="<?php echo h($_POST['email']); ?>">
     </p>
     <p><input type="submit" name="submit"></p>
   </form>
